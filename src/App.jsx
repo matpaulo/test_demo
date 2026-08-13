@@ -12,31 +12,34 @@ import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 import { WalletProvider } from './context/WalletContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
-    <WalletProvider>
-      <Router>
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/properties" element={<Properties />} />
-              <Route path="/properties/:id" element={<PropertyDetail />} />
-              <Route path="/property-3d" element={<Property3D />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path = '*' element={<NotFound/>} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </WalletProvider>
+    <ThemeProvider>
+      <WalletProvider>
+        <Router>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/properties" element={<Properties />} />
+                <Route path="/properties/:id" element={<PropertyDetail />} />
+                <Route path="/property-3d" element={<Property3D />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path = '*' element={<NotFound/>} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </WalletProvider>
+    </ThemeProvider>
   );
 }
 

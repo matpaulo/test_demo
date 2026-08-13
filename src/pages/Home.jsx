@@ -6,9 +6,11 @@ import { FaWallet, FaStore, FaMoneyBillWave, FaExchangeAlt, FaChartLine, FaLock,
 import { SiEthereum } from 'react-icons/si';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { WalletConnectButton } from '../components/WalletConnectButton';
+import { useTheme } from '../context/ThemeContext';
 
 function Home() {
   const [openSections, setOpenSections] = useState({});
+  const { isDark } = useTheme();
 
   const featuredProperties = [
     {
@@ -16,7 +18,7 @@ function Home() {
       title: 'Luxury Downtown Apartment',
       price: {
         usd: 850000,
-        eth: 425, // Example ETH value
+        eth: 425,
       },
       location: 'Miami, FL',
       image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80',
@@ -214,7 +216,7 @@ function Home() {
   };
 
   return (
-    <div className="space-y-16">
+    <div className={`space-y-16 ${isDark ? 'bg-secondary-900 text-white' : 'bg-white text-secondary-900'}`}>
       {/* Hero Section */}
       <section className="relative h-[600px] flex items-center justify-center">
         <div className="absolute inset-0 overflow-hidden">
@@ -245,11 +247,16 @@ function Home() {
           </motion.p>
         </div>
       </section>
+
       {/* Investment Steps */}
       <section className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Start Investing in Minutes</h2>
-          <p className="text-secondary-600">Your journey to crypto-powered real estate investment</p>
+          <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+            Start Investing in Minutes
+          </h2>
+          <p className={isDark ? 'text-secondary-400' : 'text-secondary-600'}>
+            Your journey to crypto-powered real estate investment
+          </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -262,13 +269,25 @@ function Home() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
             >
-              <div className="bg-white p-6 rounded-lg shadow-md text-center">
-                <div className="bg-primary-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <step.icon className="text-2xl text-primary-600" />
+              <div className={`p-6 rounded-lg shadow-md text-center transition-colors duration-200 ${
+                isDark 
+                  ? 'bg-secondary-800 border border-secondary-700' 
+                  : 'bg-white'
+              }`}>
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                  isDark ? 'bg-primary-900/30' : 'bg-primary-50'
+                }`}>
+                  <step.icon className={`text-2xl ${isDark ? 'text-primary-400' : 'text-primary-600'}`} />
                 </div>
-                <div className="text-primary-600 text-2xl font-bold mb-4">Step {index + 1}</div>
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-secondary-600">{step.description}</p>
+                <div className={`text-2xl font-bold mb-4 ${isDark ? 'text-primary-400' : 'text-primary-600'}`}>
+                  Step {index + 1}
+                </div>
+                <h3 className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                  {step.title}
+                </h3>
+                <p className={isDark ? 'text-secondary-400' : 'text-secondary-600'}>
+                  {step.description}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -276,10 +295,12 @@ function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-secondary-900 text-white py-16">
+      <section className={`py-16 transition-colors duration-200 ${
+        isDark ? 'bg-secondary-700' : 'bg-secondary-900'
+      }`}>
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">How RentVerse Works</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white">How RentVerse Works</h2>
             <p className="text-secondary-300">Understanding our tokenized real estate platform</p>
           </div>
           
@@ -296,7 +317,7 @@ function Home() {
                 <div className="bg-primary-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <item.icon className="text-2xl text-white" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-center">{item.title}</h3>
+                <h3 className="text-xl font-semibold mb-2 text-center text-white">{item.title}</h3>
                 <p className="text-secondary-300 text-center">{item.description}</p>
               </motion.div>
             ))}
@@ -307,58 +328,82 @@ function Home() {
       {/* Featured Properties */}
       <section className="container">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Featured Investment Opportunities</h2>
-          <p className="text-secondary-600">Curated properties with verified returns and immediate tokenization</p>
+          <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+            Featured Investment Opportunities
+          </h2>
+          <p className={isDark ? 'text-secondary-400' : 'text-secondary-600'}>
+            Curated properties with verified returns and immediate tokenization
+          </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProperties.map((property, index) => (
             <motion.div
               key={property.id}
-              className="card group"
+              className={`rounded-lg shadow-md overflow-hidden transition-colors duration-200 ${
+                isDark 
+                  ? 'bg-secondary-800 border border-secondary-700' 
+                  : 'bg-white'
+              }`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
             >
-              <div className="relative h-48">
+              <div className="relative h-48 overflow-hidden">
                 <img
                   src={property.image}
                   alt={property.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-primary-600 font-semibold">
+                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full font-semibold ${
+                  isDark ? 'bg-secondary-800 text-primary-400' : 'bg-white text-primary-600'
+                }`}>
                   {property.status}
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{property.title}</h3>
-                <p className="text-secondary-600 mb-4">{property.location}</p>
+                <h3 className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                  {property.title}
+                </h3>
+                <p className={isDark ? 'text-secondary-400 mb-4' : 'text-secondary-600 mb-4'}>
+                  {property.location}
+                </p>
                 
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <p className="text-sm text-secondary-500">Price</p>
-                    <p className="font-semibold">${property.price.usd.toLocaleString()}</p>
-                    <p className="text-sm text-primary-600">{property.price.eth} ETH</p>
+                    <p className={`text-sm ${isDark ? 'text-secondary-400' : 'text-secondary-500'}`}>Price</p>
+                    <p className={`font-semibold ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                      ${property.price.usd.toLocaleString()}
+                    </p>
+                    <p className={`text-sm ${isDark ? 'text-primary-400' : 'text-primary-600'}`}>
+                      {property.price.eth} ETH
+                    </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-secondary-500">ROI</p>
+                    <p className={`text-sm ${isDark ? 'text-secondary-400' : 'text-secondary-500'}`}>ROI</p>
                     <p className="font-semibold text-green-600">{property.roi}</p>
                   </div>
                 </div>
 
                 <div className="space-y-2 mb-4">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-secondary-600">Total Investors</span>
-                    <span className="font-medium">{property.metrics.totalInvestors}</span>
+                  <div className={`flex justify-between text-sm ${isDark ? 'text-secondary-400' : 'text-secondary-600'}`}>
+                    <span>Total Investors</span>
+                    <span className={`font-medium ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                      {property.metrics.totalInvestors}
+                    </span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-secondary-600">Funded</span>
-                    <span className="font-medium">{property.metrics.funded}</span>
+                  <div className={`flex justify-between text-sm ${isDark ? 'text-secondary-400' : 'text-secondary-600'}`}>
+                    <span>Funded</span>
+                    <span className={`font-medium ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                      {property.metrics.funded}
+                    </span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-secondary-600">Min Investment</span>
-                    <span className="font-medium">{property.metrics.minInvestment}</span>
+                  <div className={`flex justify-between text-sm ${isDark ? 'text-secondary-400' : 'text-secondary-600'}`}>
+                    <span>Min Investment</span>
+                    <span className={`font-medium ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                      {property.metrics.minInvestment}
+                    </span>
                   </div>
                 </div>
 
@@ -376,26 +421,40 @@ function Home() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="bg-secondary-50 pt-16">
+      <section className="container">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose RentVerse</h2>
-            <p className="text-secondary-600">Experience the future of real estate investment</p>
+            <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+              Why Choose RentVerse
+            </h2>
+            <p className={isDark ? 'text-secondary-400' : 'text-secondary-600'}>
+              Experience the future of real estate investment
+            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {advantages.map((advantage, index) => (
               <motion.div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-md text-center"
+                className={`p-6 rounded-lg shadow-md text-center transition-colors duration-200 ${
+                  isDark 
+                    ? 'bg-secondary-800 border border-secondary-700' 
+                    : 'bg-white'
+                }`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
               >
-                <advantage.icon className="text-4xl text-primary-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{advantage.title}</h3>
-                <p className="text-secondary-600">{advantage.description}</p>
+                <advantage.icon className={`text-4xl mx-auto mb-4 ${
+                  isDark ? 'text-primary-400' : 'text-primary-600'
+                }`} />
+                <h3 className={`text-xl font-semibold mb-2 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                  {advantage.title}
+                </h3>
+                <p className={isDark ? 'text-secondary-400' : 'text-secondary-600'}>
+                  {advantage.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -406,7 +465,7 @@ function Home() {
       <section className="container">
         <div className="bg-primary-600 rounded-2xl p-8 md:p-12 text-white text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Start Investing?</h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-lg mb-8 max-w-2xl mx-auto text-primary-100">
             Join thousands of investors already earning passive income through tokenized real estate.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -422,19 +481,20 @@ function Home() {
       </section>
       
       {/* Blog */}
-      <div className="container bg-white py-24">
+      <div className="container py-24 transition-colors duration-200">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <h1 className="text-3xl font-bold mb-4">Latest Insights</h1>
-          <p className="text-secondary-600">
+          <h1 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+            Latest Insights
+          </h1>
+          <p className={isDark ? 'text-secondary-400' : 'text-secondary-600'}>
             Stay informed with our latest articles and market analysis
           </p>
         </motion.div>
 
-        {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post, index) => (
             <motion.article
@@ -443,7 +503,11 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className={`rounded-lg shadow-md overflow-hidden transition-colors duration-200 ${
+                isDark 
+                  ? 'bg-secondary-800 border border-secondary-700' 
+                  : 'bg-white'
+              }`}
             >
               <Link to={`/blog/${post.slug}`}>
                 <div className="relative h-48">
@@ -452,18 +516,26 @@ function Home() {
                     alt={post.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-medium text-primary-600">
+                  <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium ${
+                    isDark 
+                      ? 'bg-secondary-800 text-primary-400' 
+                      : 'bg-white text-primary-600'
+                  }`}>
                     {categories.find(c => c.id === post.category)?.name}
                   </div>
                 </div>
                 <div className="p-6">
-                  <h2 className="text-xl font-semibold mb-3 hover:text-primary-600 transition-colors">
+                  <h2 className={`text-xl font-semibold mb-3 transition-colors ${
+                    isDark 
+                      ? 'text-white hover:text-primary-400' 
+                      : 'text-secondary-900 hover:text-primary-600'
+                  }`}>
                     {post.title}
                   </h2>
-                  <p className="text-secondary-600 mb-4">
+                  <p className={isDark ? 'text-secondary-400 mb-4' : 'text-secondary-600 mb-4'}>
                     {post.excerpt}
                   </p>
-                  <div className="flex items-center text-sm text-secondary-500">
+                  <div className={`flex items-center text-sm ${isDark ? 'text-secondary-500' : 'text-secondary-500'}`}>
                     <FiUser className="mr-2" />
                     <span className="mr-4">{post.author}</span>
                     <FiClock className="mr-2" />
@@ -484,24 +556,34 @@ function Home() {
           className="max-w-3xl mx-auto"
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-            <p className="text-secondary-600">Find answers to common questions about our platform, cryptocurrency payments, and real estate investment.</p>
+            <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+              Frequently Asked Questions
+            </h2>
+            <p className={isDark ? 'text-secondary-400' : 'text-secondary-600'}>
+              Find answers to common questions about our platform, cryptocurrency payments, and real estate investment.
+            </p>
           </div>
           <div className="space-y-8">
             {faqSections.map((section, sectionIndex) => (
-              <div key={sectionIndex} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="divide-y divide-secondary-100">
+              <div key={sectionIndex} className={`rounded-lg shadow-md overflow-hidden transition-colors duration-200 ${
+                isDark 
+                  ? 'bg-secondary-800 border border-secondary-700' 
+                  : 'bg-white'
+              }`}>
+                <div className={`divide-y ${isDark ? 'divide-secondary-700' : 'divide-secondary-100'}`}>
                   {section.questions.map((item, questionIndex) => (
                     <div key={questionIndex} className="p-6">
                       <button
                         className="w-full flex justify-between items-center text-left"
                         onClick={() => toggleSection(section.title, questionIndex)}
                       >
-                        <span className="font-medium">{item.question}</span>
+                        <span className={`font-medium ${isDark ? 'text-white' : 'text-secondary-900'}`}>
+                          {item.question}
+                        </span>
                         {openSections[`${section.title}-${questionIndex}`] ? (
-                          <FiChevronUp className="flex-shrink-0 ml-4" />
+                          <FiChevronUp className={`flex-shrink-0 ml-4 ${isDark ? 'text-secondary-400' : 'text-secondary-600'}`} />
                         ) : (
-                          <FiChevronDown className="flex-shrink-0 ml-4" />
+                          <FiChevronDown className={`flex-shrink-0 ml-4 ${isDark ? 'text-secondary-400' : 'text-secondary-600'}`} />
                         )}
                       </button>
                       <AnimatePresence>
@@ -513,7 +595,7 @@ function Home() {
                             transition={{ duration: 0.3 }}
                             className="overflow-hidden"
                           >
-                            <p className="mt-4 text-secondary-600">
+                            <p className={`mt-4 ${isDark ? 'text-secondary-400' : 'text-secondary-600'}`}>
                               {item.answer}
                             </p>
                           </motion.div>
@@ -579,11 +661,15 @@ function Home() {
             </div>
 
             <div className="mt-12 lg:mt-0 flex justify-center">
-              <div className="bg-white rounded-lg shadow-xl p-8 max-w-sm w-full">
-                <h3 className="text-2xl font-bold text-gray-900 text-center mb-6">
+              <div className={`rounded-lg shadow-xl p-8 max-w-sm w-full ${
+                isDark ? 'bg-secondary-800' : 'bg-white'
+              }`}>
+                <h3 className={`text-2xl font-bold text-center mb-6 ${
+                  isDark ? 'text-white' : 'text-secondary-900'
+                }`}>
                   Join Discord
                 </h3>
-                <p className="text-gray-500 text-center mb-8">
+                <p className={`text-center mb-8 ${isDark ? 'text-secondary-400' : 'text-secondary-500'}`}>
                   Get instant access to our community and start connecting with other investors
                 </p>
                 <a
@@ -594,7 +680,7 @@ function Home() {
                 >
                   Join Now
                 </a>
-                <p className="mt-4 text-sm text-gray-500 text-center">
+                <p className={`mt-4 text-sm text-center ${isDark ? 'text-secondary-400' : 'text-secondary-500'}`}>
                   Already a member?{' '}
                   <a href="https://discord.gg/RentVerse" className="text-indigo-600 hover:text-indigo-500">
                     Sign in
